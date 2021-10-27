@@ -84,8 +84,19 @@ function shuffleClassmates(list, weekNumber) {
   return list;
 }
 
-// shuffled week list
+// shuffling week list
 var weekList = Array.from(classmates);
 shuffleClassmates(weekList, getWeekNumber(new Date()));
 
-console.log(getWeekNumber(new Date()), weekList);
+// rendering week list
+table = document.getElementById('table');
+for (var i = 0; i < weekList.length; i++) {
+  // original code from https://morioh.com/p/f404b03572af
+
+  // create a new row
+  var newRow = table.insertRow(table.length);
+  var cell = newRow.insertCell(0);
+
+  // add value to the cell
+  cell.innerHTML = weekList[i];
+}

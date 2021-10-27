@@ -1,0 +1,10 @@
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+tr,
+th,
+td {
+  border: 1px solid #000000;
+  text-align: center;
+}

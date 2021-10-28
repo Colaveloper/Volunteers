@@ -1,3 +1,7 @@
+table = document.getElementById('table');
+weekNumberInput = document.getElementById('weekNumberInput');
+weekNumberInfo = document.getElementById('weekNumberInfo');
+
 const classmates = [
   'Ambrosini',
   'Angelucci',
@@ -41,6 +45,8 @@ const weekdays = [
   'Domenica',
 ];
 
+renderTable(generateGroups(shuffleClassmates(getWeekNumber(new Date()))));
+
 // returns an integer between 1 and 52
 function getWeekNumber(d) {
   // Copy date so don't modify original
@@ -59,13 +65,15 @@ function getWeekNumber(d) {
 }
 
 // shuffles an array based on the week
-function shuffleClassmates(list, weekNumber) {
+function shuffleClassmates(weekNumber) {
+  var weekList = Array.from(classmates);
+
   function random(seed) {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
   }
 
-  var m = list.length,
+  var m = weekList.length,
     t,
     i;
 
@@ -75,28 +83,69 @@ function shuffleClassmates(list, weekNumber) {
     i = Math.floor(random(weekNumber) * m--); // <-- MODIFIED LINE
 
     // And swap it with the current element.
-    t = list[m];
-    list[m] = list[i];
-    list[i] = t;
+    t = weekList[m];
+    weekList[m] = weekList[i];
+    weekList[i] = t;
     ++weekNumber; // <-- ADDED LINE
   }
 
-  return list;
+  return weekList;
 }
 
-// shuffling week list
-var weekList = Array.from(classmates);
-shuffleClassmates(weekList, getWeekNumber(new Date()));
-
-// rendering week list
-table = document.getElementById('table');
-for (var i = 0; i < weekList.length; i++) {
-  // original code from https://morioh.com/p/f404b03572af
-
-  // create a new row
-  var newRow = table.insertRow(table.length);
-  var cell = newRow.insertCell(0);
-
-  // add value to the cell
-  cell.innerHTML = weekList[i];
+function generateGroups(weekList) {
+  return [weekList.slice(0, 8), weekList.slice(8, 16), weekList.slice(16)];
 }
+
+// rendering current weekNumber
+weekNumberInput.value = getWeekNumber(new Date());
+// storing the selected weekNumber
+
+// rendering the groups in the table
+function renderTable(groups) {
+  // empty table
+  table.innerHTML = '';
+
+  for (var i = 0; i < groups.length; i++) {
+    // original code from https://morioh.com/p/f404b03572af
+
+    // create a new row
+    var newRow = table.insertRow(table.length);
+    var cell = newRow.insertCell(0);
+
+    // add value to the cell
+
+    for (var j = 0; j < groups[i].length; j++) {
+      // original code from https://morioh.com/p/f404b03572af
+
+      // create a new row
+      var newRow = table.insertRow(table.length);
+      var cell = newRow.insertCell(0);
+
+      // add value to the cell
+      cell.innerHTML = groups[i][j];
+    }
+  }
+}
+
+// Displaying the selected list
+weekNumberInput.addEventListener('input', function () {
+  if (this.value > 0 && this.value <= 52) {
+    const newWeekNumber = Number.parseInt(this.value);
+    renderTable(generateGroups(shuffleClassmates(newWeekNumber)));
+  } else if (this.value > 52) {
+    window.alert(
+      `non esiste la ${this.value}° settimana, inserisci un numero minore o uguale a 52`
+    );
+    weekNumberInput.value = getWeekNumber(new Date());
+  } else if (this.value < 0) {
+    window.alert(`che cacchio metti un numero negativo ah uagliò`);
+    weekNumberInput.value = getWeekNumber(new Date());
+  }
+  if (this.value == getWeekNumber(new Date())) {
+    weekNumberInfo.innerHTML = 'Inserisci un numero tra 1 e 52';
+  } else {
+    weekNumberInfo.innerHTML = `La settimana corrente è la numero ${getWeekNumber(
+      new Date()
+    )}`;
+  }
+});

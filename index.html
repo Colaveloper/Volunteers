@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <label for="weekNumberInput">Cerca gruppi per settimana dell'anno: </label>
+    <input type="number" id="weekNumberInput" name="name" required />
+    <label id="weekNumberInfo" for="weekNumberInput"
+      >Inserisci un numero tra 1 e 52
+    </label>
     <table id="table">
       <thead>
         <tr>
-          <!-- <th>Giorno</th>
-          <th>Materia</th> -->
           <th>Volontari</th>
+          <th>Giorno</th>
+          <th>Materia</th>
         </tr>
       </thead>
     </table>

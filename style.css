@@ -8,3 +8,8 @@ td {
   border: 1px solid #000000;
   text-align: center;
 }
+
+input {
+  margin: 10px 0;
+  box-sizing: border-box;
+}

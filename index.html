@@ -12,6 +12,19 @@
     <label id="weekNumberInfo" for="weekNumberInput"
       >Inserisci un numero tra 1 e 52
     </label>
+    <br />
+    <label for='newExaminationForm'>Aggiungi un'interrogazione:</label>
+    <form name="newExaminationForm" >
+      <label for="subject">Materia:</label>
+      <select name="subject" id="newExaminationSubjects">
+      </select>
+      <label for="date">Giorno:</label>
+      <input type="date" 
+       id="newExaminationDate" 
+       name="date"
+      ></input>
+      <input type="submit" value="Submit" />
+    </form>
     <table id="table">
       <thead>
         <tr>

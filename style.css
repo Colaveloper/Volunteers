@@ -1,15 +1,27 @@
 * {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  color: #fff;
+  background-color: #df46bd;
 }
 
 tr,
 th,
 td {
-  border: 1px solid #000000;
+  border: 1px solid #fff;
   text-align: center;
 }
 
 input {
-  margin: 10px 0;
-  box-sizing: border-box;
+  width: 150px;
+  text-align: center;
 }
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+

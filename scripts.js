@@ -1,6 +1,8 @@
 table = document.getElementById('table');
 weekNumberInput = document.getElementById('weekNumberInput');
 weekNumberInfo = document.getElementById('weekNumberInfo');
+newExaminationSubjects = document.getElementById('newExaminationSubjects');
+newExaminationDate = document.getElementById('newExaminationDate');
 
 const classmates = [
   'Ambrosini',
@@ -92,13 +94,13 @@ function shuffleClassmates(weekNumber) {
   return weekList;
 }
 
+// splitting weeklist in 3 groups
 function generateGroups(weekList) {
   return [weekList.slice(0, 8), weekList.slice(8, 16), weekList.slice(16)];
 }
 
 // rendering current weekNumber
 weekNumberInput.value = getWeekNumber(new Date());
-// storing the selected weekNumber
 
 // rendering the groups in the table
 function renderTable(groups) {
@@ -149,3 +151,19 @@ weekNumberInput.addEventListener('input', function () {
     )}`;
   }
 });
+
+// Displaying the subject options for creating a new examination
+subjects.forEach((e) => {
+  newExaminationSubjects.innerHTML += `<option>${e}</option>`;
+});
+
+// Setting today as default date for creating a new examination
+Date.prototype.toDateInputValue = function () {
+  var local = new Date(this);
+  local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+  return local.toJSON().slice(0, 10);
+};
+document.getElementById('newExaminationDate').value =
+  new Date().toDateInputValue();
+
+  

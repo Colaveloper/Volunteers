@@ -3,6 +3,8 @@ weekNumberInput = document.getElementById('weekNumberInput');
 weekNumberInfo = document.getElementById('weekNumberInfo');
 newExaminationSubjects = document.getElementById('newExaminationSubjects');
 newExaminationDate = document.getElementById('newExaminationDate');
+newExaminationForm = document.getElementById('newExaminationForm');
+examinationList = document.getElementById('examinationList');
 
 const classmates = [
   'Ambrosini',
@@ -30,12 +32,12 @@ const classmates = [
   'Vitalucci',
 ];
 const subjects = [
-  'Scienze',
-  'Inglese',
-  'Latino',
-  'Italiano',
-  'Storia',
-  'Filosofia',
+  'scienze',
+  'inglese',
+  'latino',
+  'italiano',
+  'storia',
+  'filosofia',
 ];
 const weekdays = [
   'Lunedì',
@@ -46,6 +48,21 @@ const weekdays = [
   'Sabato',
   'Domenica',
 ];
+const months = [
+  'gennaio',
+  'febbraio',
+  'marzo',
+  'aprile',
+  'maggio',
+  'giugno',
+  'luglio',
+  'agosto',
+  'settembre',
+  'ottobre',
+  'novembre',
+  'dicembre',
+];
+var examinations = [];
 
 renderTable(generateGroups(shuffleClassmates(getWeekNumber(new Date()))));
 
@@ -166,4 +183,17 @@ Date.prototype.toDateInputValue = function () {
 document.getElementById('newExaminationDate').value =
   new Date().toDateInputValue();
 
-  
+// Adding new examination
+newExaminationForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  examinations.push([
+    newExaminationSubjects.value,
+    new Date(newExaminationDate.value),
+  ]);
+  examinationList.innerHTML = '';
+  examinations.forEach((el) => {
+    examinationList.innerHTML += `Interrogazione in ${
+      el[0]
+    } in data ${el[1].getDate()} ${months[el[1].getMonth()]} <br>`;
+  });
+});

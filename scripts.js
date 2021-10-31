@@ -174,14 +174,14 @@ subjects.forEach((e) => {
   newExaminationSubjects.innerHTML += `<option>${e}</option>`;
 });
 
-// Setting today as default date for creating a new examination
+// Setting today as default & minimum date for creating a new examination
 Date.prototype.toDateInputValue = function () {
   var local = new Date(this);
   local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
   return local.toJSON().slice(0, 10);
 };
-document.getElementById('newExaminationDate').value =
-  new Date().toDateInputValue();
+newExaminationDate.value = new Date().toDateInputValue();
+newExaminationDate.setAttribute('min', new Date().toDateInputValue());
 
 // Adding new examination
 newExaminationForm.addEventListener('submit', (event) => {
@@ -190,10 +190,21 @@ newExaminationForm.addEventListener('submit', (event) => {
     newExaminationSubjects.value,
     new Date(newExaminationDate.value),
   ]);
+  deleteOld(examinations);
   examinationList.innerHTML = '';
-  examinations.forEach((el) => {
-    examinationList.innerHTML += `Interrogazione in ${
+  examinations.forEach((el, idx) => {
+    examinationList.innerHTML += `<p>${idx + 1}° interrogazione in ${
       el[0]
-    } in data ${el[1].getDate()} ${months[el[1].getMonth()]} <br>`;
+    } in data ${el[1].getDate()} ${months[el[1].getMonth()]} </p>`;
   });
 });
+
+// Self-explanatory
+function deleteOld(examinations) {
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  examinations.forEach((examination, idx) => {
+    if (examination[1] < yesterday) {
+      examinations.splice(idx, 1);
+    }
+  });
+}

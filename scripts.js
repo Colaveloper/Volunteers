@@ -144,10 +144,9 @@ function renderVolunteers() {
       }
     }
   }
-  console.log('trying to render table with this data', volunteers);
 }
 
-// rendering the group
+// rendering the groups
 function renderGroups(groups) {
   // empty table
   groupsTable.innerHTML = '';
@@ -171,6 +170,7 @@ function renderGroups(groups) {
       // add value to the cell
       cell.innerHTML = groups[i][j];
     }
+    cell.innerHTML = '<br>';
   }
 }
 

@@ -7,41 +7,45 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <label for="weekNumberInput">Cerca gruppi per settimana dell'anno: </label>
-    <input type="number" id="weekNumberInput" required />
-    <label id="weekNumberInfo" for="weekNumberInput"
-      >Inserisci un numero tra 1 e 52
-    </label>
-    <h1>Gruppi</h1>
-    <table id="groupsTable">
-      <thead>
-        <tr>
-          <th>Gruppi</th>
-        </tr>
-      </thead>
-    </table>
-    <label for='newExaminationForm'>Aggiungi un'interrogazione:</label>
-    <form id="newExaminationForm">
-      <label for="newExaminationSubjects">Materia:</label>
-      <select id="newExaminationSubjects">
-      </select>
-      <label for="newExaminationDate">Giorno:</label>
-      <input type="date" 
-       id="newExaminationDate" 
-      ></input>
-      <input type="submit" value="Crea" >
-    </form>
-    <p id="examinationList"></p>
-    <h1>Volontari</h1>
-    <table id="volunteersTable">
-      <thead>
-        <tr>
-          <th>Volontari</th>
-          <th>Materia</th>
-          <th>Giorno</th>
-        </tr>
-      </thead>
-    </table>
+    <div class="container">
+      <label for="weekNumberInput">Cerca gruppi per settimana dell'anno: </label><br>
+      <input type="number" id="weekNumberInput" required />
+      <label id="weekNumberInfo" for="weekNumberInput"
+        >Inserisci un numero tra 1 e 52
+      </label>
+      <h1>Gruppi</h1>
+      <table id="groupsTable">
+        <thead>
+          <tr>
+            <th>Gruppi</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="container">
+      <label for='newExaminationForm'>Aggiungi un'interrogazione:</label>
+      <form id="newExaminationForm">
+        <label for="newExaminationSubjects">Materia:</label>
+        <select id="newExaminationSubjects">
+        </select>
+        <label for="newExaminationDate">Giorno:</label>
+        <input type="date" 
+        id="newExaminationDate" 
+        ></input>
+        <input type="submit" value="Crea" >
+      </form>
+      <p id="examinationList"></p>
+      <h1>Volontari</h1>
+      <table id="volunteersTable">
+        <thead>
+          <tr>
+            <th>Volontari</th>
+            <th>Materia</th>
+            <th>Giorno</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
 
     <script src="./scripts.js"></script>
   </body>

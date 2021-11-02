@@ -183,13 +183,33 @@ Date.prototype.toDateInputValue = function () {
 newExaminationDate.value = new Date().toDateInputValue();
 newExaminationDate.setAttribute('min', new Date().toDateInputValue());
 
+// Check if examination is already registered
+function isExaminationRegistered(newExamination) {
+  var answer = false;
+  examinations.forEach((examination) => {
+    if (newExamination[0] == examination[0]) {
+      if (newExamination[1].getDate() == examination[1].getDate()) {
+        answer = true;
+      }
+    }
+  });
+  return answer;
+}
+
 // Adding new examination
 newExaminationForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  examinations.push([
+  const newExamination = [
     newExaminationSubjects.value,
     new Date(newExaminationDate.value),
-  ]);
+  ];
+  if (isExaminationRegistered(newExamination)) {
+    window.alert(
+      `Questa interrogazione di ${newExaminationSubjects.value} è già nel database 👍`
+    );
+  } else {
+    examinations.push(newExamination);
+  }
   deleteOld(examinations);
   examinationList.innerHTML = '';
   examinations.forEach((el, idx) => {

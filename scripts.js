@@ -217,6 +217,7 @@ newExaminationForm.addEventListener('submit', (event) => {
       el[0]
     } in data ${el[1].getDate()} ${months[el[1].getMonth()]} </p>`;
   });
+  groupsToExam();
 });
 
 // Self-explanatory
@@ -227,4 +228,22 @@ function deleteOld(examinations) {
       examinations.splice(idx, 1);
     }
   });
+}
+
+// matches groups to examinations, reversing the order every 3 groups
+function groupsToExam() {
+  const threeGroups = generateGroups(
+    shuffleClassmates(getWeekNumber(new Date()))
+  );
+  var examinationsAndGroups = [];
+  examinations.forEach((exam, idx) => {
+    const groupIndex = idx % 3;
+    var newGroup = Array.from(threeGroups[groupIndex]);
+    if (idx % 6 >= 3) {
+      newGroup.reverse();
+      console.log('invertion!');
+    }
+    examinationsAndGroups.push([exam, newGroup]);
+  });
+  console.log(examinationsAndGroups);
 }

@@ -12,7 +12,14 @@
     <label id="weekNumberInfo" for="weekNumberInput"
       >Inserisci un numero tra 1 e 52
     </label>
-    <br />
+    <h1>Gruppi</h1>
+    <table id="groupsTable">
+      <thead>
+        <tr>
+          <th>Gruppi</th>
+        </tr>
+      </thead>
+    </table>
     <label for='newExaminationForm'>Aggiungi un'interrogazione:</label>
     <form id="newExaminationForm">
       <label for="newExaminationSubjects">Materia:</label>
@@ -25,15 +32,17 @@
       <input type="submit" value="Crea" >
     </form>
     <p id="examinationList"></p>
-    <table id="table">
+    <h1>Volontari</h1>
+    <table id="volunteersTable">
       <thead>
         <tr>
           <th>Volontari</th>
-          <th>Giorno</th>
           <th>Materia</th>
+          <th>Giorno</th>
         </tr>
       </thead>
     </table>
+
     <script src="./scripts.js"></script>
   </body>
 </html>

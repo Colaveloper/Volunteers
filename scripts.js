@@ -1,4 +1,5 @@
-table = document.getElementById('table');
+groupsTable = document.getElementById('groupsTable');
+volunteersTable = document.getElementById('volunteersTable');
 weekNumberInput = document.getElementById('weekNumberInput');
 weekNumberInfo = document.getElementById('weekNumberInfo');
 newExaminationSubjects = document.getElementById('newExaminationSubjects');
@@ -64,7 +65,7 @@ const months = [
 ];
 var examinations = [];
 
-renderTable(generateGroups(shuffleClassmates(getWeekNumber(new Date()))));
+renderGroups(generateGroups(shuffleClassmates(getWeekNumber(new Date()))));
 
 // returns an integer between 1 and 52
 function getWeekNumber(d) {
@@ -119,16 +120,43 @@ function generateGroups(weekList) {
 // rendering current weekNumber
 weekNumberInput.value = getWeekNumber(new Date());
 
-// rendering the groups in the table
-function renderTable(groups) {
+// rendering the volunteers
+function renderVolunteers() {
+  const volunteers = groupsToExam();
+
   // empty table
-  table.innerHTML = '';
+  volunteersTable.innerHTML = '';
+
+  for (var i = 0; i < volunteers.length; i++) {
+    // create a new row
+    var newRow = volunteersTable.insertRow(volunteersTable.length);
+    for (var j = 0; j < volunteers[i].length; j++) {
+      // create a new cell
+      var cell = newRow.insertCell(j);
+
+      // add value to the cell
+      if (j == 2) {
+        cell.innerHTML = `${volunteers[i][2].getDate()} ${
+          months[volunteers[i][2].getMonth()]
+        }`;
+      } else {
+        cell.innerHTML = volunteers[i][j];
+      }
+    }
+  }
+  console.log('trying to render table with this data', volunteers);
+}
+
+// rendering the group
+function renderGroups(groups) {
+  // empty table
+  groupsTable.innerHTML = '';
 
   for (var i = 0; i < groups.length; i++) {
     // original code from https://morioh.com/p/f404b03572af
 
     // create a new row
-    var newRow = table.insertRow(table.length);
+    var newRow = groupsTable.insertRow(groupsTable.length);
     var cell = newRow.insertCell(0);
 
     // add value to the cell
@@ -137,7 +165,7 @@ function renderTable(groups) {
       // original code from https://morioh.com/p/f404b03572af
 
       // create a new row
-      var newRow = table.insertRow(table.length);
+      var newRow = groupsTable.insertRow(groupsTable.length);
       var cell = newRow.insertCell(0);
 
       // add value to the cell
@@ -150,7 +178,8 @@ function renderTable(groups) {
 weekNumberInput.addEventListener('input', function () {
   if (this.value > 0 && this.value <= 52) {
     const newWeekNumber = Number.parseInt(this.value);
-    renderTable(generateGroups(shuffleClassmates(newWeekNumber)));
+    renderVolunteers();
+    renderGroups(generateGroups(shuffleClassmates(newWeekNumber)));
   } else if (this.value > 52) {
     window.alert(
       `non esiste la ${this.value}° settimana, inserisci un numero minore o uguale a 52`
@@ -170,8 +199,8 @@ weekNumberInput.addEventListener('input', function () {
 });
 
 // Displaying the subject options for creating a new examination
-subjects.forEach((e) => {
-  newExaminationSubjects.innerHTML += `<option>${e}</option>`;
+subjects.forEach((subject) => {
+  newExaminationSubjects.innerHTML += `<option>${subject}</option>`;
 });
 
 // Setting today as default & minimum date for creating a new examination
@@ -218,6 +247,7 @@ newExaminationForm.addEventListener('submit', (event) => {
     } in data ${el[1].getDate()} ${months[el[1].getMonth()]} </p>`;
   });
   groupsToExam();
+  renderVolunteers();
 });
 
 // Self-explanatory
@@ -232,10 +262,11 @@ function deleteOld(examinations) {
 
 // matches groups to examinations, reversing the order every 3 groups
 function groupsToExam() {
+  // threeGroups should depend on the given week, not only for the current week
   const threeGroups = generateGroups(
     shuffleClassmates(getWeekNumber(new Date()))
   );
-  var examinationsAndGroups = [];
+  var volunteers = [];
   examinations.forEach((exam, idx) => {
     const groupIndex = idx % 3;
     var newGroup = Array.from(threeGroups[groupIndex]);
@@ -243,7 +274,14 @@ function groupsToExam() {
       newGroup.reverse();
       console.log('invertion!');
     }
-    examinationsAndGroups.push([exam, newGroup]);
+    newGroup.forEach((person) => {
+      volunteers.push([
+        person,
+        exam[0], // subject
+        exam[1], // date
+      ]);
+    });
   });
-  console.log(examinationsAndGroups);
+  console.log(volunteers);
+  return volunteers;
 }
